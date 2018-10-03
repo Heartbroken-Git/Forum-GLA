@@ -20,14 +20,13 @@ public class LoginServlet extends HttpServlet {
         if (authenticate(req)) {
             req.getRequestDispatcher("/WEB-INF/jsp/threads.jsp").forward(req, resp);
         } else {
-            /*out.println("<script type=\"text/javascript\">");
-            out.println("alert('User or password incorrect');");
-            out.println("</script>");*/
+            System.err.println("Bad login/password");
+            req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
         }
     }
 
     private boolean authenticate(HttpServletRequest req) {
         // temporary authentication thingy
-        return (req.getParameter("username") == "root" && req.getParameter("password") == "pwd");
+        return (req.getParameter("username").equals("root") && req.getParameter("password").equals("pwd") );
     }
 }
