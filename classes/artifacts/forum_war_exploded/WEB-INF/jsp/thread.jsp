@@ -7,7 +7,7 @@
 	
 	
 	
-	<link rel="stylesheet" href="fichiers/style.css" type="text/css" />
+	<link rel="stylesheet" href="/fichiers/style.css" type="text/css" />
 	
 	</head>
 	<body class="ltr">
@@ -23,7 +23,7 @@
 					<tbody>
 						<tr>
 							<td class="row1">
-								<p class="breadcrumbs">Non connect&eacute;</p>
+								<p class="breadcrumbs">Connecté en tant que <%= session.getAttribute( "username" ) %></p>
 							</td>
 						</tr>
 					</tbody>
@@ -112,7 +112,7 @@
 				<tbody>
 					<tr>
 						<td class="row1">
-							<p class="breadcrumbs">Index du forum</p>
+							<p class="breadcrumbs"><a class="index" href="${pageContext.request.contextPath}/home">Index du forum</a></p>
 						</td>
 					</tr>
 				</tbody>

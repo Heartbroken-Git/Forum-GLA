@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en-gb"
 	lang="en-gb">
@@ -21,7 +22,16 @@
 					<tbody>
 						<tr>
 							<td class="row1">
-								<p class="breadcrumbs">Non connect&eacute;</p>
+                                <c:choose>
+                                    <c:when test = "${auth}">
+                                        <p class="breadcrumbs">Connecté en tant que ${login}</p>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <p class="breadcrumbs">Non connecté</p>
+                                    </c:otherwise>
+                                </c:choose>
+
 							</td>
 						</tr>
 					</tbody>
@@ -65,28 +75,28 @@
 	
 	
 							<tr>
-								<td class="row1"><a class="topictitle" href="#" >Mon fil de discussion</a></td>
+								<td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/example" >Mon fil de discussion</a></td>
 								<td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">Yves</a></p></td>
 								<td class="row1" align="center" width="50"><p class="topicdetails">10</p></td>
 								<td class="row2" align="center" width="50"><p class="topicdetails">1234</p></td>
 							</tr>
 	
 							<tr>
-								<td class="row1"><a class="topictitle" href="#">Mon fil de discussion</a></td>
+								<td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/example">Mon fil de discussion</a></td>
 								<td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">Yves</a></p></td>
 								<td class="row1" align="center" width="50"><p class="topicdetails">10</p></td>
 								<td class="row2" align="center" width="50"><p class="topicdetails">1234</p></td>
 							</tr>
 	
 							<tr>
-								<td class="row1"><a class="topictitle" href="#">Mon fil de discussion</a></td>
+								<td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/example">Mon fil de discussion</a></td>
 								<td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">Yves</a></p></td>
 								<td class="row1" align="center" width="50"><p class="topicdetails">10</p></td>
 								<td class="row2" align="center" width="50"><p class="topicdetails">1234</p></td>
 							</tr>
 	
 							<tr>
-								<td class="row1"><a class="topictitle" href="#">Mon fil de discussion</a></td>
+								<td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/example">Mon fil de discussion</a></td>
 								<td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">Yves</a></p></td>
 								<td class="row1" align="center" width="50"><p class="topicdetails">10</p></td>
 								<td class="row2" align="center" width="50"><p class="topicdetails">1234</p></td>
@@ -103,7 +113,7 @@
 				<tbody>
 					<tr>
 						<td class="row1">
-							<p class="breadcrumbs">Index du forum</p>
+                            <p class="breadcrumbs" ><a class="index" href="${pageContext.request.contextPath}/home">Index du forum</a></p>
 						</td>
 					</tr>
 				</tbody>
