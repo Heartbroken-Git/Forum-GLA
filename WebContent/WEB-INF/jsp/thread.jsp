@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en-gb"
 	lang="en-gb">
@@ -23,7 +24,15 @@
 					<tbody>
 						<tr>
 							<td class="row1">
-								<p class="breadcrumbs">Connecté en tant que <%= session.getAttribute( "username" ) %></p>
+                                <c:choose>
+                                    <c:when test = "${auth}">
+                                        <p class="breadcrumbs">Connecté en tant que ${username}</p>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <p class="breadcrumbs">Non connecté</p>
+                                    </c:otherwise>
+                                </c:choose>
 							</td>
 						</tr>
 					</tbody>

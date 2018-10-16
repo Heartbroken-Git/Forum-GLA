@@ -1,6 +1,6 @@
 package fr.acceis.forum.servlet;
 
-import fr.acceis.forum.dao.ChaosDao;
+import fr.acceis.forum.dao.ImplDao;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LoginServlet extends HttpServlet {
 
-    private ChaosDao dao;
+    private ImplDao dao;
 
     public LoginServlet() throws SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException {
-        dao = ChaosDao.getInstance();
+        dao = ImplDao.getInstance();
     }
 
     @Override
@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
 
         if (authenticate(req)) {
             req.getSession().setAttribute("auth", Boolean.TRUE);
+            req.getSession().setAttribute("username", req.getParameter("username"));
             req.getRequestDispatcher("/WEB-INF/jsp/threads.jsp").forward(req, resp);
         } else {
             System.err.println("Bad login/password");
@@ -38,10 +39,8 @@ public class LoginServlet extends HttpServlet {
 
     private boolean authenticate(HttpServletRequest req) {
         try {
-            
+
             String recPwd = dao.readPassword(req.getParameter("username"));
-            System.err.println(req.getParameter("password"));
-            System.err.println(recPwd);
             return recPwd.equals(req.getParameter("password"));
 
         } catch (SQLException e) {

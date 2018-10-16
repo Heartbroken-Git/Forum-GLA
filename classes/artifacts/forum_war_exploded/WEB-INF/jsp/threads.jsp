@@ -24,7 +24,7 @@
 							<td class="row1">
                                 <c:choose>
                                     <c:when test = "${auth}">
-                                        <p class="breadcrumbs">Connecté en tant que ${login}</p>
+                                        <p class="breadcrumbs">Connecté en tant que ${username}</p>
                                     </c:when>
 
                                     <c:otherwise>
