@@ -72,9 +72,14 @@
 								<th>&nbsp;Vues&nbsp;</th>
 							</tr>
 	
+	                        <c:forEach items="${sujets}" var="sujetCourant">
+                                <td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/${sujetCourant.getIdSujet()}" >${sujetCourant.getTitre()}</a></td>
+                                <td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">${sujetCourant.getAuteur().getLogin()}</a></p></td>
+                                <td class="row1" align="center" width="50"><p class="topicdetails">${sujetCourant.getNbMessages()}</p></td>
+                                <td class="row2" align="center" width="50"><p class="topicdetails">TBD</p></td>
+                            </c:forEach>
 	
-	
-							<tr>
+							<%--<tr>
 								<td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/example" >Mon fil de discussion</a></td>
 								<td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">Yves</a></p></td>
 								<td class="row1" align="center" width="50"><p class="topicdetails">10</p></td>
@@ -100,7 +105,7 @@
 								<td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">Yves</a></p></td>
 								<td class="row1" align="center" width="50"><p class="topicdetails">10</p></td>
 								<td class="row2" align="center" width="50"><p class="topicdetails">1234</p></td>
-							</tr>
+							</tr>--%>
 	
 	
 						</tbody>

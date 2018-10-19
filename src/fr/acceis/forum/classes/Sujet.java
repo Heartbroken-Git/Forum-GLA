@@ -4,10 +4,10 @@ public class Sujet {
 
     private int idSujet;
     private String titre;
-    private int auteur;
+    private Utilisateur auteur;
     private int nbMessages;
 
-    public Sujet(int id, String t, int idAut, int n) {
+    public Sujet(int id, String t, Utilisateur idAut, int n) {
         idSujet = id;
         titre = t;
         auteur = idAut;
@@ -22,7 +22,7 @@ public class Sujet {
         return titre;
     }
 
-    public int getAuteur() {
+    public Utilisateur getAuteur() {
         return auteur;
     }
 

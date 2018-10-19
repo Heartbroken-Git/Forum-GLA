@@ -72,10 +72,10 @@
 								<th>&nbsp;Vues&nbsp;</th>
 							</tr>
 	
-	                        <c:forEach sujets="${sujets}" var="sujetCourant">
-                                <td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/${sujetCourant.idSujet}" >Mon fil de discussion</a></td>
-                                <td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">${sujetCourant.auteur}</a></p></td>
-                                <td class="row1" align="center" width="50"><p class="topicdetails">${sujetCourant.nbMessages}</p></td>
+	                        <c:forEach items="${sujets}" var="sujetCourant">
+                                <td class="row1"><a class="topictitle" href="${pageContext.request.contextPath}/threads/${sujetCourant.getIdSujet()}" >${sujetCourant.getTitre()}</a></td>
+                                <td class="row2" align="center" width="130"><p class="topicauthor"><a class="username-coloured" href="#">${sujetCourant.getAuteur().getLogin()}</a></p></td>
+                                <td class="row1" align="center" width="50"><p class="topicdetails">${sujetCourant.getNbMessages()}</p></td>
                                 <td class="row2" align="center" width="50"><p class="topicdetails">TBD</p></td>
                             </c:forEach>
 	
