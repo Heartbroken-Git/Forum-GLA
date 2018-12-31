@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 public class LoginServlet extends HttpServlet {
 
     private ImplDao dao;
+    private String pepperGrain = "c0721d4d740608a31d5d0064608e1b38829c3e2a66e9dc0665dd58fc1ba3b0aa";
 
     public LoginServlet() throws SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         dao = ImplDao.getInstance();
@@ -46,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 
             String recPwd = dao.readPassword(req.getParameter("username"));
             String recSalt = dao.readSalt(req.getParameter("username"));
-            String strToTest = req.getParameter("password").concat(recSalt);
+            String strToTest = req.getParameter("password").concat(recSalt).concat(pepperGrain);
             return recPwd.equals(getSHA(strToTest));
 
         } catch (SQLException e) {
