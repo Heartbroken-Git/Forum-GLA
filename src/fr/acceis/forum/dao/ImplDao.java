@@ -1,5 +1,6 @@
 package fr.acceis.forum.dao;
 
+import fr.acceis.forum.classes.Message;
 import fr.acceis.forum.classes.Sujet;
 import fr.acceis.forum.classes.Utilisateur;
 
@@ -32,9 +33,24 @@ public class ImplDao {
     // C
 
     // Messages
+    public void createMessage (String content, int authorId, int threadId) throws IllegalArgumentException, SQLException{
+
+        if (content.length() > 1024) {
+            throw new IllegalArgumentException("Message length exceeded");
+        }
+
+        String sqlQuery = "INSERT INTO Messages VALUES (?,?,?);";
+        PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+        stmt.setString(1, content);
+        stmt.setInt(2, authorId);
+        stmt.setInt(3, threadId);
+        stmt.executeQuery();
+
+        stmt.close();
+    }
 
     // Sujets
-    public void createThreads(String titre, int idAut) throws IllegalArgumentException, SQLException {
+    public void createThread(String titre, int idAut) throws IllegalArgumentException, SQLException {
 
         if (titre.length() > 255) {
             throw new IllegalArgumentException("Title length exceeded");
@@ -50,7 +66,7 @@ public class ImplDao {
     }
 
     // Utilisateurs
-    public void createUsers(String username, String password) throws IllegalArgumentException, SQLException {
+    public void createUser(String username, String password) throws IllegalArgumentException, SQLException {
 
         if (username.length() > 255||password.length() > 255) {
             throw new IllegalArgumentException("Login/password length exceeded");
@@ -68,6 +84,45 @@ public class ImplDao {
     // R
 
     // Messages
+    public Message readMessage(int messageId) throws SQLException {
+        String sqlQuery = "SELECT * FROM Messages WHERE idMessage=?";
+        PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+        stmt.setInt(1, messageId);
+        ResultSet res = stmt.executeQuery();
+        res.next();
+
+        int resMessageId = res.getInt(1);
+        String resContent = res.getString(2);
+        Utilisateur resAuthor = readAuthorMessage(res.getInt(3));
+        Sujet resThread = readThread(res.getInt(4));
+
+        stmt.close();
+        res.close();
+
+        return new Message(resMessageId, resContent, resAuthor, resThread);
+    }
+
+    public ArrayList<Message> readAllMessage() throws SQLException {
+        String sqlQuery = "SELECT * FROM Messages;";
+        PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+        ResultSet res = stmt.executeQuery();
+
+        ArrayList<Message> resArray = new ArrayList<Message>();
+
+        while (res.next()) {
+            int resMessageId = res.getInt(1);
+            String resContent = res.getString(2);
+            Utilisateur resAuthor = readAuthorMessage(res.getInt(3));
+            Sujet resThread = readThread(res.getInt(4));
+
+            resArray.add(new Message(resMessageId, resContent, resAuthor, resThread));
+        }
+
+        stmt.close();
+        res.close();
+
+        return resArray;
+    }
 
     // Sujets
     public Sujet readThread(int idSujet) throws SQLException {
@@ -142,6 +197,22 @@ public class ImplDao {
         return new Utilisateur(resId, resLogin);
     }
 
+    public Utilisateur readAuthorMessage(int idMessage) throws SQLException {
+        String sqlQuery = "SELECT id, login FROM Utilisateurs FULL JOIN Messages ON Utilisateurs.id = Messages.auteur WHERE idMessage = ?;";
+        PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+        stmt.setInt(1, idMessage);
+        ResultSet res = stmt.executeQuery();
+        res.next();
+
+        int resId = res.getInt(1);
+        String resLogin = res.getString(2);
+
+        stmt.close();
+        res.close();
+
+        return new Utilisateur(resId, resLogin);
+    }
+
     // U
 
     // Messages
@@ -194,7 +265,7 @@ public class ImplDao {
     // Messages
 
     // Sujets
-    public void deleteThreads(int idThread) throws  SQLException {
+    public void deleteThread(int idThread) throws  SQLException {
         String sqlQuery = "DELETE FROM Sujets WHERE idSujet=?;";
         PreparedStatement stmt = conn.prepareStatement(sqlQuery);
         stmt.setInt(1, idThread);
@@ -204,7 +275,7 @@ public class ImplDao {
     }
 
     // Utilisateurs
-    public void deleteUsers(String username) throws SQLException {
+    public void deleteUser(String username) throws SQLException {
         String sqlQuery = "DELETE FROM Utilisateurs WHERE login=?;";
         PreparedStatement stmt = conn.prepareStatement(sqlQuery);
         stmt.setString(1, username);

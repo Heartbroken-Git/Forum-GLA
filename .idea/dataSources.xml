@@ -6,7 +6,7 @@
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
-      <jdbc-url>jdbc:hsqldb:$PROJECT_DIR$/data/basejpa</jdbc-url>
+      <jdbc-url>jdbc:hsqldb:$PROJECT_DIR$/data/basejpa;hsqldb.lock_file=false</jdbc-url>
     </data-source>
   </component>
 </project>
