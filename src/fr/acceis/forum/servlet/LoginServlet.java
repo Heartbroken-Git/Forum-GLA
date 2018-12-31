@@ -45,7 +45,9 @@ public class LoginServlet extends HttpServlet {
         try {
 
             String recPwd = dao.readPassword(req.getParameter("username"));
-            return recPwd.equals(getSHA(req.getParameter("password")));
+            String recSalt = dao.readSalt(req.getParameter("username"));
+            String strToTest = req.getParameter("password").concat(recSalt);
+            return recPwd.equals(getSHA(strToTest));
 
         } catch (SQLException e) {
             System.err.println(e);

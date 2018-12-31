@@ -181,6 +181,21 @@ public class ImplDao {
         return resString; // (╯°□°）╯︵ ┻━┻ Y U NO START FROM 0 ?!?
     }
 
+    public String readSalt(String username) throws SQLException{
+        String sqlQuery = "SELECT salt FROM Utilisateurs WHERE login=?;";
+        PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+        stmt.setString(1, username);
+        ResultSet res = stmt.executeQuery();
+        res.next();
+
+        String resString = res.getString(1);
+
+        stmt.close();
+        res.close();
+
+        return resString;
+    }
+
     public Utilisateur readAuthorThread(int idThread) throws SQLException {
         String sqlQuery = "SELECT id, login FROM Utilisateurs FULL JOIN Sujets ON Utilisateurs.id = Sujets.auteur WHERE idSujet = ?;";
         PreparedStatement stmt = conn.prepareStatement(sqlQuery);
